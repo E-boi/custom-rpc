@@ -1,0 +1,7 @@
+{
+  "name": "Lightcord RPC",
+  "version": "1.0.0",
+  "description": "Lightcord's RPC system ported to Powercord.",
+  "author": "Phorcys",
+  "license": "MIT"
+}
