@@ -52,20 +52,23 @@ module.exports = class customRPC extends Plugin {
 		});
 
 		const { SET_ACTIVITY } = getModule(['INVITE_BROWSER'], false);
-		SET_ACTIVITY.handler({
-			socket: {
-				id: 100,
-				application: {
-					id: this.settings.get('client_id', '711416957718757418'),
-					name: this.settings.get('name', 'testing lol'),
+		// without it sometimes the rpc wouldn't show
+		setTimeout(() => {
+			SET_ACTIVITY.handler({
+				socket: {
+					id: 100,
+					application: {
+						id: this.settings.get('client_id', '711416957718757418'),
+						name: this.settings.get('name', 'testing lol'),
+					},
+					transport: 'ipc',
 				},
-				transport: 'ipc',
-			},
-			args: {
-				pid: 10,
-				activity: this.game(),
-			},
-		});
+				args: {
+					pid: 10,
+					activity: this.game(),
+				},
+			});
+		}, 5000);
 	}
 
 	pluginWillUnload() {
