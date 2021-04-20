@@ -50,7 +50,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 				</TextInput>
 				<TextInput
 					note="this will be the file name"
-					defaultValue={getSetting('large_image', '')}
+					defaultValue={getSetting('large_image', 'powercord')}
 					onChange={val => {
 						updateSetting('large_image', val);
 						powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
@@ -60,7 +60,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 				</TextInput>
 				<TextInput
 					note="this will be the file name"
-					defaultValue={getSetting('small_image', '')}
+					defaultValue={getSetting('small_image', 'powercord')}
 					onChange={val => {
 						updateSetting('small_image', val);
 						powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
@@ -93,9 +93,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 				<br />
 				<a
 					onClick={() => {
-						require('electron').shell.openExternal(
-							'https://www.reddit.com/r/discordapp/comments/a2c2un/how_to_setup_a_custom_discord_rich_presence_for/'
-						);
+						require('electron').shell.openExternal('https://www.reddit.com/r/discordapp/comments/a2c2un/how_to_setup_a_custom_discord_rich_presence_for/');
 					}}
 				>
 					Help for custom RPC but do step 3 with this plugin

@@ -10,7 +10,7 @@ module.exports = class customRPC extends Plugin {
 				id: 100,
 				application: {
 					id: this.settings.get('client_id', '711416957718757418'),
-					name: this.settings.get('name', 'testing lol'),
+					name: this.settings.get('name', 'Custom RPC'),
 				},
 				transport: 'ipc',
 			},
@@ -31,8 +31,8 @@ module.exports = class customRPC extends Plugin {
 				  }
 				: undefined,
 			assets: {
-				large_image: this.settings.get('large_image', undefined),
-				small_image: this.settings.get('small_image', undefined),
+				large_image: this.settings.get('large_image', 'powercord'),
+				small_image: this.settings.get('small_image', 'powercord'),
 				large_text: this.settings.get('large_text', undefined) || undefined,
 				small_text: this.settings.get('small_text', undefined) || undefined,
 			},
@@ -78,7 +78,7 @@ module.exports = class customRPC extends Plugin {
 				id: 100,
 				application: {
 					id: this.settings.get('client_id', '711416957718757418'),
-					name: this.settings.get('name', 'testing lol'),
+					name: this.settings.get('name', 'Custom RPC'),
 				},
 				transport: 'ipc',
 			},
