@@ -1,6 +1,6 @@
 # Custom RPC
 
-Gives you the abilty to have a custom presence that will start when you launch discord.
+Gives you the abilty to have a custom presence that will start when you launch discord. Doesn't show for web users but why would you use discord on the web anyways.
 
 Preview:
 
