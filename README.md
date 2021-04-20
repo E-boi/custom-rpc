@@ -1,11 +1,7 @@
-# Lightcord RPC
-me when rpc plugin from lighcurd
-git clone in plugin folder
-u hav plugin
+# Custom RPC
 
-tags pls ignore:
-lighcurd rpc download free 100% no virus
-ligtcord
-ligurd
-rpc free
-rich presenc dicsord
+Gives you the abilty to have a custom presence that will start when you launch discord.
+
+Preview:
+
+![image](https://user-images.githubusercontent.com/54505527/115468333-efb13580-a200-11eb-9d31-d3f848cddd17.png)
