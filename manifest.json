@@ -1,7 +1,7 @@
 {
-  "name": "Lightcord RPC",
-  "version": "1.0.0",
-  "description": "Lightcord's RPC system ported to Powercord.",
-  "author": "Phorcys",
-  "license": "MIT"
+	"name": "Custom RPC",
+	"version": "1.0.0",
+	"description": "Let's you have a custom RPC",
+	"author": "ugly-patootie#0611",
+	"license": "MIT"
 }
