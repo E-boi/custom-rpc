@@ -3,11 +3,6 @@ const { TextInput, SwitchItem } = require('powercord/components/settings');
 const path = require('path');
 
 module.exports = class RPCSettings extends React.PureComponent {
-	constructor(props) {
-		super(props);
-		this.state = { category0Opened: false, category1Opened: false };
-	}
-
 	render() {
 		const { getSetting, toggleSetting, updateSetting } = this.props;
 		const { getCurrentUser } = getModule(['getCurrentUser'], false);
