@@ -18,7 +18,14 @@ module.exports = class RPCSettings extends React.PureComponent {
 				>
 					Show Time
 				</SwitchItem>
-				<TextInput defaultValue={getSetting('client_id', '711416957718757418')} required={true} onChange={val => updateSetting('rpcId', val)}>
+				<TextInput
+					defaultValue={getSetting('client_id', '711416957718757418')}
+					required={true}
+					onChange={val => {
+						updateSetting('client_id', val);
+						powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
+					}}
+				>
 					Client ID
 				</TextInput>
 				<TextInput
@@ -93,7 +100,9 @@ module.exports = class RPCSettings extends React.PureComponent {
 				<br />
 				<a
 					onClick={() => {
-						require('electron').shell.openExternal('https://www.reddit.com/r/discordapp/comments/a2c2un/how_to_setup_a_custom_discord_rich_presence_for/');
+						require('electron').shell.openExternal(
+							'https://www.reddit.com/r/discordapp/comments/a2c2un/how_to_setup_a_custom_discord_rich_presence_for/'
+						);
 					}}
 				>
 					Help for custom RPC but do step 3 with this plugin
