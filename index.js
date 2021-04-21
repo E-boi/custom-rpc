@@ -27,7 +27,7 @@ module.exports = class customRPC extends Plugin {
 			state: this.settings.get('state', 'Powercord Client'),
 			timestamps: this.settings.get('show_time', true)
 				? {
-						start: new Date(this.settings.get('custom_date', 'powercord'))),
+						start: new Date(this.settings.get('start_time', undefined)) || Date.now(),
 				  }
 				: undefined,
 			assets: {
