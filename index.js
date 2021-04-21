@@ -22,7 +22,7 @@ module.exports = class customRPC extends Plugin {
 	}
 
 	game() {
-		return {
+		let rp = {
 			details: this.settings.get('details', 'Browsing Discord'),
 			state: this.settings.get('state', 'Powercord Client'),
 			timestamps: this.settings.get('show_time', true)
@@ -37,6 +37,12 @@ module.exports = class customRPC extends Plugin {
 				small_text: this.settings.get('small_text', undefined) || undefined,
 			},
 		};
+
+		let buttons = [];
+		if (this.settings.get('button1', {label: "powercord.dev", url: "https://powercord.dev"}).label != "" && this.settings.get('button1', {label: "powercord.dev", url: "https://powercord.dev"}).url != "") buttons.push(this.settings.get('button1'));
+		if (this.settings.get('button2', {label: "", url: ""}).label != "" && this.settings.get('button2', {label: "", url: ""}).url != "") buttons.push(this.settings.get('button2'));
+		if (buttons[0]) rp.buttons = buttons;
+		return rp;
 	}
 
 	startPlugin() {

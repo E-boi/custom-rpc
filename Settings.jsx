@@ -1,8 +1,13 @@
 const { React, getModule, getModuleByDisplayName } = require('powercord/webpack');
-const { TextInput, SwitchItem } = require('powercord/components/settings');
+const { TextInput, SwitchItem, Category } = require('powercord/components/settings');
 const path = require('path');
 
 module.exports = class RPCSettings extends React.PureComponent {
+	constructor(props) {
+		super(props);
+		this.state = { category0Opened: false, category1Opened: false, button1Def: {label: "powercord.dev", url: "https://powercord.dev"}, button2Def: {label: "", url: ""}};
+	}
+
 	render() {
 		const { getSetting, toggleSetting, updateSetting } = this.props;
 		const { getCurrentUser } = getModule(['getCurrentUser'], false);
@@ -55,46 +60,118 @@ module.exports = class RPCSettings extends React.PureComponent {
 				>
 					State
 				</TextInput>
-				<TextInput
-					note="this will be the file name"
-					defaultValue={getSetting('large_image', 'powercord')}
-					onChange={val => {
-						updateSetting('large_image', val);
-						powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
+				<Category
+                	name='Images'
+                	description={'Manage large and small image appearance'}
+                	opened={this.state.category0Opened}
+            		onChange={() => {
+						this.setState({ category1Opened: false });
+						this.setState({ category0Opened: !this.state.category0Opened })
 					}}
-				>
-					Large Image
-				</TextInput>
-				<TextInput
-					note="this will be the file name"
-					defaultValue={getSetting('small_image', 'powercord')}
-					onChange={val => {
-						updateSetting('small_image', val);
-						powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
+                >
+					<TextInput
+						note="this will be the file name"
+						defaultValue={getSetting('large_image', 'powercord')}
+						onChange={val => {
+							updateSetting('large_image', val);
+							powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
+						}}
+					>
+						Large Image
+					</TextInput>
+					<TextInput
+						note="This will show text when large image is hovered"
+						defaultValue={getSetting('large_text', '')}
+						onChange={val => {
+							updateSetting('large_text', val);
+							powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
+						}}
+					>
+						Large Text
+					</TextInput>
+					<TextInput
+						note="this will be the file name"
+						defaultValue={getSetting('small_image', 'powercord')}
+						onChange={val => {
+							updateSetting('small_image', val);
+							powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
+						}}
+					>
+						Small Image
+					</TextInput>
+					<TextInput
+						note="This will show text when small image is hovered"
+						defaultValue={getSetting('small_text', '')}
+						onChange={val => {
+							updateSetting('small_text', val);
+							powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
+						}}
+					>
+						Small Text
+					</TextInput>
+				</Category>
+				<Category
+                  name='Buttons'
+                  description={'Manage buttons'}
+                  opened={this.state.category1Opened}
+                  onChange={() => {
+					  this.setState({ category0Opened: false });
+					  this.setState({ category1Opened: !this.state.category1Opened });
 					}}
-				>
-					Small Image
-				</TextInput>
-				<TextInput
-					note="This will show text when large image is hovered"
-					defaultValue={getSetting('large_text', '')}
-					onChange={val => {
-						updateSetting('large_text', val);
-						powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
-					}}
-				>
-					Large Text
-				</TextInput>
-				<TextInput
-					note="This will show text when small image is hovered"
-					defaultValue={getSetting('small_text', '')}
-					onChange={val => {
-						updateSetting('small_text', val);
-						powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
-					}}
-				>
-					Small Text
-				</TextInput>
+                >
+					<TextInput
+						defaultValue={getSetting('button1', this.state.button1Def).label}
+						onChange={val => {
+							let button1 = getSetting('button1', this.state.button1Def);
+							button1.label = val;
+							updateSetting('button1', button1);
+							if (button1.url != "") {
+								powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
+							}
+						}}
+					>
+						Button 1 Text
+					</TextInput>
+					<TextInput
+						defaultValue={getSetting('button1', this.state.button1Def).url}
+						onChange={val => {
+							let button1 = getSetting('button1', this.state.button1Def);
+							button1.url = val;
+							updateSetting('button1', button1);
+							if (button1.label != "") {
+								powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
+							}
+						}}
+					>
+						Button 1 Url
+					</TextInput>
+					<TextInput
+						defaultValue={getSetting('button2', this.state.button2Def).label}
+						onChange={val => {
+							let button2 = getSetting('button2', this.state.button2Def);
+							button2.label = val;
+							updateSetting('button2', button2);
+							if (button2.url != "") {
+								powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
+							}
+						}}
+					>
+						Button 2 Text
+					</TextInput>
+					<TextInput
+						defaultValue={getSetting('button2', this.state.button2Def).url}
+						onChange={val => {
+							let button2 = getSetting('button2', this.state.button2Def);
+							button2.url = val;
+							updateSetting('button2', button2);
+							if (button2.label != "") {
+								powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
+							}
+						}}
+					>
+						Button 2 Url
+					</TextInput>
+				</Category>
 				<p className="h5-18_1nd">Your popout:</p>
 				<UserPopout user={getCurrentUser()} />
 				<br />
