@@ -59,7 +59,7 @@ module.exports = class customRPC extends Plugin {
 					id: 100,
 					application: {
 						id: this.settings.get('client_id', '711416957718757418'),
-						name: this.settings.get('name', 'testing lol'),
+						name: this.settings.get('name', 'Custom RPC'),
 					},
 					transport: 'ipc',
 				},
