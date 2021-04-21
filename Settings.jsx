@@ -1,7 +1,6 @@
 const { React, getModule, getModuleByDisplayName } = require('powercord/webpack');
 const { TextInput, SwitchItem, Category } = require('powercord/components/settings');
 const path = require('path');
-const { get } = require('http');
 
 module.exports = class RPCSettings extends React.PureComponent {
 	constructor(props) {
@@ -150,7 +149,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 							}
 						}}
 					>
-						Button 1 Text
+						Button 2 Text
 					</TextInput>
 					<TextInput
 						defaultValue={getSetting('button2', this.state.button2Def).url}
@@ -163,7 +162,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 							}
 						}}
 					>
-						Button 1 Url
+						Button 2 Url
 					</TextInput>
 				</Category>
 				<p className="h5-18_1nd">Your popout:</p>

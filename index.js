@@ -39,11 +39,9 @@ module.exports = class customRPC extends Plugin {
 		};
 
 		let buttons = [];
-		if (this.settings.get('button1', {label: "", url: ""}).label != "" && this.settings.get('button1', {label: "", url: ""}).url != "") buttons.push(this.settings.get('button1'));
+		if (this.settings.get('button1', {label: "powercord.dev", url: "https://powercord.dev"}).label != "" && this.settings.get('button1', {label: "powercord.dev", url: "https://powercord.dev"}).url != "") buttons.push(this.settings.get('button1'));
 		if (this.settings.get('button2', {label: "", url: ""}).label != "" && this.settings.get('button2', {label: "", url: ""}).url != "") buttons.push(this.settings.get('button2'));
 		if (buttons[0]) rp.buttons = buttons;
-		console.log(buttons);
-		console.log(rp);
 		return rp;
 	}
 
