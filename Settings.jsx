@@ -40,7 +40,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 						      powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC()
 				     	}}
 				>
-					Custom Time
+					Custom Start Time In Minutes
 				</TextInput>
 				<TextInput
 					defaultValue={getSetting('name', 'Custom RPC')}
