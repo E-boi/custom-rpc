@@ -34,6 +34,15 @@ module.exports = class RPCSettings extends React.PureComponent {
 					Client ID
 				</TextInput>
 				<TextInput
+					defaultValue={getSetting('start_time', '')}
+					onChange={val => {
+						      updateSetting('start_time', val);
+						      powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC()
+				     	}}
+				>
+					Custom Start Time In Minutes
+				</TextInput>
+				<TextInput
 					defaultValue={getSetting('name', 'Custom RPC')}
 					onChange={val => {
 						updateSetting('name', val);
