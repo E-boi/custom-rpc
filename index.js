@@ -34,6 +34,13 @@ module.exports = class customRPC extends Plugin {
 				pid: 10,
 				activity: this.game(),
 			},
+		}).catch(err => {
+			if (err.body.message === 'Unknown Application') {
+				powercord.api.notices.sendToast(`custom-rpc-invaildId-${Math.floor(Math.random() * 200)}`, {
+					header: 'Invaild Client Id',
+					timeout: 3000,
+				});
+			}
 		});
 	}
 
@@ -85,7 +92,9 @@ module.exports = class customRPC extends Plugin {
 			state: this.settings.get(`${selectedRPC}.state`, 'Powercord Client'),
 			timestamps: this.settings.get(`${selectedRPC}.show_time`, true)
 				? {
-						start: this.settings.get(`${selectedRPC}.start_time`, undefined) ? new Date(new Date().getTime() - this.settings.get(`${selectedRPC}.start_time`, undefined) * 60000).getTime() : Date.now(),
+						start: this.settings.get(`${selectedRPC}.start_time`, undefined)
+							? new Date(new Date().getTime() - this.settings.get(`${selectedRPC}.start_time`, undefined) * 60000).getTime()
+							: Date.now(),
 				  }
 				: undefined,
 			assets: {
@@ -97,8 +106,16 @@ module.exports = class customRPC extends Plugin {
 		};
 
 		let buttons = [];
-		if (this.settings.get(`${selectedRPC}.button1`, { label: 'powercord.dev', url: 'https://powercord.dev' }).label != '' && this.settings.get(`${selectedRPC}.button1`, { label: 'powercord.dev', url: 'https://powercord.dev' }).url != '') buttons.push(this.settings.get(`${selectedRPC}.button1`, { label: 'powercord.dev', url: 'https://powercord.dev' }));
-		if (this.settings.get(`${selectedRPC}.button2`, { label: '', url: '' }).label != '' && this.settings.get(`${selectedRPC}.button2`, { label: '', url: '' }).url != '') buttons.push(this.settings.get(`${selectedRPC}.button2`));
+		if (
+			this.settings.get(`${selectedRPC}.button1`, { label: 'powercord.dev', url: 'https://powercord.dev' }).label != '' &&
+			this.settings.get(`${selectedRPC}.button1`, { label: 'powercord.dev', url: 'https://powercord.dev' }).url != ''
+		)
+			buttons.push(this.settings.get(`${selectedRPC}.button1`, { label: 'powercord.dev', url: 'https://powercord.dev' }));
+		if (
+			this.settings.get(`${selectedRPC}.button2`, { label: '', url: '' }).label != '' &&
+			this.settings.get(`${selectedRPC}.button2`, { label: '', url: '' }).url != ''
+		)
+			buttons.push(this.settings.get(`${selectedRPC}.button2`));
 		if (buttons[0]) rp.buttons = buttons;
 		return rp;
 	}
@@ -133,6 +150,13 @@ module.exports = class customRPC extends Plugin {
 					pid: 10,
 					activity: this.game(),
 				},
+			}).catch(err => {
+				if (err.body.message === 'Unknown Application') {
+					powercord.api.notices.sendToast(`custom-rpc-invaildId-${Math.floor(Math.random() * 200)}`, {
+						header: 'Invaild Client Id',
+						timeout: 3000,
+					});
+				}
 			});
 		}, 5000);
 	}
