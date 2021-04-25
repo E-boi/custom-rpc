@@ -64,7 +64,6 @@ module.exports = class RPCSettings extends React.PureComponent {
 					value={rpc.client_id}
 					required={true}
 					onChange={val => {
-						console.log('changed!');
 						rpc.client_id = val;
 						updateSetting(this.state.selectedRPC, rpc);
 						powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
