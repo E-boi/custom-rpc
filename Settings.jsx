@@ -28,16 +28,12 @@ module.exports = class RPCSettings extends React.PureComponent {
 		};
 	}
 
-	forceUpdateHandler() {
-		this.forceUpdate();
-	}
-
 	render() {
 		const { getSetting, updateSetting } = this.props;
 		const { getCurrentUser } = getModule(['getCurrentUser'], false);
 		const UserPopout = getModuleByDisplayName('UserProfile', false);
 		const rpc = getSetting(this.state.selectedRPC);
-		console.log(this.state.selectedRPC);
+		console.log(rpc, this.state.selectedRPC);
 		return (
 			<div>
 				<SelectInput
@@ -46,7 +42,6 @@ module.exports = class RPCSettings extends React.PureComponent {
 					onChange={val => {
 						updateSetting('selected', val.value);
 						this.setState({ selectedRPC: val.value });
-						// reeee how to reload
 						powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
 					}}
 					options={configs.map(({ label, value }) => ({
@@ -57,18 +52,20 @@ module.exports = class RPCSettings extends React.PureComponent {
 					RPC CONFIGS
 				</SelectInput>
 				<SwitchItem
-					value={getSetting(`${this.state.selectedRPC}.show_time`, true)}
+					value={rpc.show_time ?? true}
 					onChange={() => {
 						rpc.show_time = !rpc.show_time;
+						updateSetting(this.state.selectedRPC, rpc);
 						powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
 					}}
 				>
 					Show Time
 				</SwitchItem>
 				<TextInput
-					defaultValue={getSetting(`${this.state.selectedRPC}.client_id`, '711416957718757418')}
+					value={rpc.client_id}
 					required={true}
 					onChange={val => {
+						console.log('changed!');
 						rpc.client_id = val;
 						updateSetting(this.state.selectedRPC, rpc);
 						powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
@@ -77,7 +74,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 					Client ID
 				</TextInput>
 				<TextInput
-					defaultValue={getSetting(`${this.state.selectedRPC}.start_time`, '')}
+					value={rpc.start_time ?? ''}
 					onChange={val => {
 						rpc.start_time = val;
 						updateSetting(this.state.selectedRPC, rpc);
@@ -87,7 +84,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 					Custom Start Time In Minutes
 				</TextInput>
 				<TextInput
-					defaultValue={getSetting(`${this.state.selectedRPC}.name`)}
+					value={rpc.name}
 					onChange={val => {
 						rpc.name = val;
 						updateSetting(this.state.selectedRPC, rpc);
@@ -97,7 +94,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 					Name
 				</TextInput>
 				<TextInput
-					defaultValue={getSetting(`${this.state.selectedRPC}.details`, 'Browsing Discord')}
+					value={rpc.details}
 					onChange={val => {
 						rpc.details = val;
 						updateSetting(this.state.selectedRPC, rpc);
@@ -107,7 +104,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 					Details
 				</TextInput>
 				<TextInput
-					defaultValue={getSetting(`${this.state.selectedRPC}.state`, 'Powercord Client')}
+					value={rpc.state}
 					onChange={val => {
 						rpc.state = val;
 						updateSetting(this.state.selectedRPC, rpc);
@@ -127,7 +124,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 				>
 					<TextInput
 						note="this will be the file name"
-						defaultValue={getSetting(`${this.state.selectedRPC}.large_image`, 'powercord')}
+						value={rpc.large_image}
 						onChange={val => {
 							rpc.large_image = val;
 							updateSetting(this.state.selectedRPC, rpc);
@@ -138,7 +135,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 					</TextInput>
 					<TextInput
 						note="This will show text when large image is hovered"
-						defaultValue={getSetting(`${this.state.selectedRPC}.large_text`, '')}
+						value={rpc.large_text ?? ''}
 						onChange={val => {
 							rpc.large_text = val;
 							updateSetting(this.state.selectedRPC, rpc);
@@ -149,7 +146,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 					</TextInput>
 					<TextInput
 						note="this will be the file name"
-						defaultValue={getSetting(`${this.state.selectedRPC}.small_image`, 'powercord')}
+						value={rpc.small_image}
 						onChange={val => {
 							rpc.small_image = val;
 							updateSetting(this.state.selectedRPC, rpc);
@@ -160,7 +157,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 					</TextInput>
 					<TextInput
 						note="This will show text when small image is hovered"
-						defaultValue={getSetting(`${this.state.selectedRPC}.small_text`, '')}
+						value={rpc.small_text ?? ''}
 						onChange={val => {
 							rpc.small_text = val;
 							updateSetting(this.state.selectedRPC, rpc);
@@ -180,7 +177,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 					}}
 				>
 					<TextInput
-						defaultValue={getSetting(`${this.state.selectedRPC}.button1`, this.state.button1Def).label}
+						value={rpc.button1.label}
 						onChange={val => {
 							rpc.button1.label = val;
 							updateSetting(this.state.selectedRPC, rpc);
@@ -192,7 +189,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 						Button 1 Text
 					</TextInput>
 					<TextInput
-						defaultValue={getSetting(`${this.state.selectedRPC}.button1`, this.state.button1Def).url}
+						value={rpc.button1.url}
 						onChange={val => {
 							rpc.button1.url = val;
 							updateSetting(this.state.selectedRPC, rpc);
@@ -204,7 +201,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 						Button 1 Url
 					</TextInput>
 					<TextInput
-						defaultValue={getSetting(`${this.state.selectedRPC}.button2`, this.state.button2Def).label}
+						value={rpc.button2?.label ?? ''}
 						onChange={val => {
 							if (!rpc.button2) rpc.button2 = {};
 							rpc.button2.label = val;
@@ -217,7 +214,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 						Button 2 Text
 					</TextInput>
 					<TextInput
-						defaultValue={getSetting(`${this.state.selectedRPC}.button2`, this.state.button2Def).url}
+						value={rpc.button2?.url ?? ''}
 						onChange={val => {
 							if (!rpc.button2) rpc.button2 = {};
 							rpc.button2.url = val;
@@ -235,9 +232,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 				<br />
 				<a
 					onClick={() => {
-						require('electron').shell.openExternal(
-							'https://www.reddit.com/r/discordapp/comments/a2c2un/how_to_setup_a_custom_discord_rich_presence_for/'
-						);
+						require('electron').shell.openExternal('https://www.reddit.com/r/discordapp/comments/a2c2un/how_to_setup_a_custom_discord_rich_presence_for/');
 					}}
 				>
 					Help for custom RPC but do step 3 with this plugin
