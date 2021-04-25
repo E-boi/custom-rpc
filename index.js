@@ -41,10 +41,14 @@ module.exports = class customRPC extends Plugin {
 		if (this.settings.get('rpc1', undefined)) return;
 		const settings = powercord.api.settings._fluxProps(__dirname.split(path.sep).pop()).settings;
 		if (Object.entries(settings).length === 0) {
-			console.log('setting defaults...');
+			this.log('setting defaults...');
 			this.settings.set('rpc1', defaults);
 			this.settings.set('rpc2', defaults);
 			this.settings.set('rpc3', defaults);
+			powercord.api.notices.sendToast('custom-rpc-1', {
+				header: 'Settings conversion done!',
+				content: `Please reload so you can start using saved configs for custom-rpc!`,
+			});
 			return;
 		}
 		const rpc1 = {
@@ -68,6 +72,10 @@ module.exports = class customRPC extends Plugin {
 		this.settings.set('rpc1', rpc1);
 		this.settings.set('rpc2', defaults);
 		this.settings.set('rpc3', defaults);
+		powercord.api.notices.sendToast('custom-rpc-2', {
+			header: 'Settings conversion done!',
+			content: `Please reload so you can start using saved configs for custom-rpc!`,
+		});
 	}
 
 	game() {
