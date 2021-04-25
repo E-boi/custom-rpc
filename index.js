@@ -1,6 +1,7 @@
 const { Plugin } = require('powercord/entities');
 const { getModule, React } = require('powercord/webpack');
 const Settings = require('./Settings');
+const path = require('path');
 
 const defaults = {
 	show_time: true,
@@ -38,7 +39,7 @@ module.exports = class customRPC extends Plugin {
 
 	convertSettingsForConfigs() {
 		if (this.settings.get('rpc1', undefined)) return;
-		const settings = powercord.api.settings._fluxProps(__dirname.split('/').pop()).settings;
+		const settings = powercord.api.settings._fluxProps(__dirname.split(path.sep).pop()).settings;
 		if (Object.entries(settings).length === 0) {
 			console.log('setting defaults...');
 			this.settings.set('rpc1', defaults);
@@ -76,9 +77,7 @@ module.exports = class customRPC extends Plugin {
 			state: this.settings.get(`${selectedRPC}.state`, 'Powercord Client'),
 			timestamps: this.settings.get(`${selectedRPC}.show_time`, true)
 				? {
-						start: this.settings.get(`${selectedRPC}.start_time`, undefined)
-							? new Date(new Date().getTime() - this.settings.get(`${selectedRPC}.start_time`, undefined) * 60000).getTime()
-							: Date.now(),
+						start: this.settings.get(`${selectedRPC}.start_time`, undefined) ? new Date(new Date().getTime() - this.settings.get(`${selectedRPC}.start_time`, undefined) * 60000).getTime() : Date.now(),
 				  }
 				: undefined,
 			assets: {
@@ -90,16 +89,8 @@ module.exports = class customRPC extends Plugin {
 		};
 
 		let buttons = [];
-		if (
-			this.settings.get(`${selectedRPC}.button1`, { label: 'powercord.dev', url: 'https://powercord.dev' }).label != '' &&
-			this.settings.get(`${selectedRPC}.button1`, { label: 'powercord.dev', url: 'https://powercord.dev' }).url != ''
-		)
-			buttons.push(this.settings.get(`${selectedRPC}.button1`, { label: 'powercord.dev', url: 'https://powercord.dev' }));
-		if (
-			this.settings.get(`${selectedRPC}.button2`, { label: '', url: '' }).label != '' &&
-			this.settings.get(`${selectedRPC}.button2`, { label: '', url: '' }).url != ''
-		)
-			buttons.push(this.settings.get(`${selectedRPC}.button2`));
+		if (this.settings.get(`${selectedRPC}.button1`, { label: 'powercord.dev', url: 'https://powercord.dev' }).label != '' && this.settings.get(`${selectedRPC}.button1`, { label: 'powercord.dev', url: 'https://powercord.dev' }).url != '') buttons.push(this.settings.get(`${selectedRPC}.button1`, { label: 'powercord.dev', url: 'https://powercord.dev' }));
+		if (this.settings.get(`${selectedRPC}.button2`, { label: '', url: '' }).label != '' && this.settings.get(`${selectedRPC}.button2`, { label: '', url: '' }).url != '') buttons.push(this.settings.get(`${selectedRPC}.button2`));
 		if (buttons[0]) rp.buttons = buttons;
 		return rp;
 	}
