@@ -33,7 +33,6 @@ module.exports = class RPCSettings extends React.PureComponent {
 		const { getCurrentUser } = getModule(['getCurrentUser'], false);
 		const UserPopout = getModuleByDisplayName('UserProfile', false);
 		const rpc = getSetting(this.state.selectedRPC);
-		console.log(rpc, this.state.selectedRPC);
 		return (
 			<div>
 				<SelectInput
