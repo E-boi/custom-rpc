@@ -29,7 +29,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 	}
 
 	render() {
-		const { getSetting, updateSetting } = this.props;
+		const { getSetting, updateSetting, toggleSetting } = this.props;
 		const { getCurrentUser } = getModule(['getCurrentUser'], false);
 		const UserPopout = getModuleByDisplayName('UserProfile', false);
 		const rpc = getSetting(this.state.selectedRPC);
@@ -50,6 +50,16 @@ module.exports = class RPCSettings extends React.PureComponent {
 				>
 					RPC CONFIGS
 				</SelectInput>
+				<SwitchItem
+					value={getSetting('disabled', false)}
+					onChange={() => {
+						toggleSetting('disabled');
+						powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
+					}}
+					note="This will effect all 3 saved configs"
+				>
+					Disable RPC
+				</SwitchItem>
 				<SwitchItem
 					value={rpc.show_time ?? true}
 					onChange={() => {
@@ -83,6 +93,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 				</TextInput>
 				<TextInput
 					value={rpc.name}
+					required={true}
 					onChange={val => {
 						rpc.name = val;
 						updateSetting(this.state.selectedRPC, rpc);
@@ -230,7 +241,9 @@ module.exports = class RPCSettings extends React.PureComponent {
 				<br />
 				<a
 					onClick={() => {
-						require('electron').shell.openExternal('https://www.reddit.com/r/discordapp/comments/a2c2un/how_to_setup_a_custom_discord_rich_presence_for/');
+						require('electron').shell.openExternal(
+							'https://www.reddit.com/r/discordapp/comments/a2c2un/how_to_setup_a_custom_discord_rich_presence_for/'
+						);
 					}}
 				>
 					Help for custom RPC but do step 3 with this plugin

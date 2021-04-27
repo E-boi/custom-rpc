@@ -32,7 +32,7 @@ module.exports = class customRPC extends Plugin {
 			},
 			args: {
 				pid: 10,
-				activity: this.game(),
+				activity: this.settings.get('disabled', false) ? undefined : this.game(),
 			},
 		}).catch(err => {
 			if (err.body.message === 'Unknown Application') {
@@ -88,18 +88,18 @@ module.exports = class customRPC extends Plugin {
 	game() {
 		const selectedRPC = this.settings.get('selected', 'rpc1');
 		let rp = {
-			details: this.settings.get(`${selectedRPC}.details`, 'Browsing Discord'),
-			state: this.settings.get(`${selectedRPC}.state`, 'Powercord Client'),
-			timestamps: this.settings.get(`${selectedRPC}.show_time`, true)
+			details: this.settings.get(`${selectedRPC}.details`, defaults.details) || undefined,
+			state: this.settings.get(`${selectedRPC}.state`, defaults.state) || undefined,
+			timestamps: this.settings.get(`${selectedRPC}.show_time`, defaults.show_time)
 				? {
 						start: this.settings.get(`${selectedRPC}.start_time`, undefined)
-							? new Date(new Date().getTime() - this.settings.get(`${selectedRPC}.start_time`, undefined) * 60000).getTime()
+							? new Date(new Date().getTime() - this.settings.get(`${selectedRPC}.start_time`) * 60000).getTime()
 							: Date.now(),
 				  }
 				: undefined,
 			assets: {
-				large_image: this.settings.get(`${selectedRPC}.large_image`, 'powercord'),
-				small_image: this.settings.get(`${selectedRPC}.small_image`, 'powercord'),
+				large_image: this.settings.get(`${selectedRPC}.large_image`, defaults.large_image),
+				small_image: this.settings.get(`${selectedRPC}.small_image`, defaults.small_image),
 				large_text: this.settings.get(`${selectedRPC}.large_text`, undefined) || undefined,
 				small_text: this.settings.get(`${selectedRPC}.small_text`, undefined) || undefined,
 			},
@@ -133,32 +133,7 @@ module.exports = class customRPC extends Plugin {
 				}),
 		});
 
-		const { SET_ACTIVITY } = getModule(['INVITE_BROWSER'], false);
-		// without it sometimes the rpc wouldn't show
-		const selectedRPC = this.settings.get('selected', 'rpc1');
-		setTimeout(() => {
-			SET_ACTIVITY.handler({
-				socket: {
-					id: 100,
-					application: {
-						id: this.settings.get(`${selectedRPC}.client_id`, '711416957718757418'),
-						name: this.settings.get(`${selectedRPC}.name`, 'Custom RPC'),
-					},
-					transport: 'ipc',
-				},
-				args: {
-					pid: 10,
-					activity: this.game(),
-				},
-			}).catch(err => {
-				if (err.body.message === 'Unknown Application') {
-					powercord.api.notices.sendToast(`custom-rpc-invaildId-${Math.floor(Math.random() * 200)}`, {
-						header: 'Invaild Client Id',
-						timeout: 3000,
-					});
-				}
-			});
-		}, 5000);
+		setTimeout(() => this.reloadRPC(), 2000);
 	}
 
 	pluginWillUnload() {
