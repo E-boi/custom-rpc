@@ -236,6 +236,8 @@ module.exports = class RPCSettings extends React.PureComponent {
 						Button 2 Url
 					</TextInput>
 				</Category>
+				<p className='h5-18_1nd'>Your popout:</p>
+				<UserPopout transitionState={1} user={getCurrentUser()} />
 				<br />
 				<a
 					onClick={() => {
