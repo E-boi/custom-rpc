@@ -31,7 +31,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 	render() {
 		const { getSetting, updateSetting, toggleSetting } = this.props;
 		const { getCurrentUser } = getModule(['getCurrentUser'], false);
-		const UserPopout = getModuleByDisplayName('UserProfile', false);
+		const UserPopout = getModuleByDisplayName('UserProfileModal', false);
 		const rpc = getSetting(this.state.selectedRPC);
 		return (
 			<div>
@@ -56,7 +56,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 						toggleSetting('disabled');
 						powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
 					}}
-					note="This will effect all 3 saved configs"
+					note='This will effect all 3 saved configs'
 				>
 					Disable RPC
 				</SwitchItem>
@@ -123,7 +123,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 					State
 				</TextInput>
 				<Category
-					name="Images"
+					name='Images'
 					description={'Manage large and small image appearance'}
 					opened={this.state.category0Opened}
 					onChange={() => {
@@ -132,7 +132,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 					}}
 				>
 					<TextInput
-						note="this will be the file name"
+						note='this will be the file name'
 						value={rpc.large_image}
 						onChange={val => {
 							rpc.large_image = val;
@@ -143,7 +143,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 						Large Image
 					</TextInput>
 					<TextInput
-						note="This will show text when large image is hovered"
+						note='This will show text when large image is hovered'
 						value={rpc.large_text ?? ''}
 						onChange={val => {
 							rpc.large_text = val;
@@ -154,7 +154,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 						Large Text
 					</TextInput>
 					<TextInput
-						note="this will be the file name"
+						note='this will be the file name'
 						value={rpc.small_image}
 						onChange={val => {
 							rpc.small_image = val;
@@ -165,7 +165,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 						Small Image
 					</TextInput>
 					<TextInput
-						note="This will show text when small image is hovered"
+						note='This will show text when small image is hovered'
 						value={rpc.small_text ?? ''}
 						onChange={val => {
 							rpc.small_text = val;
@@ -177,7 +177,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 					</TextInput>
 				</Category>
 				<Category
-					name="Buttons"
+					name='Buttons'
 					description={'Manage buttons'}
 					opened={this.state.category1Opened}
 					onChange={() => {
@@ -236,8 +236,6 @@ module.exports = class RPCSettings extends React.PureComponent {
 						Button 2 Url
 					</TextInput>
 				</Category>
-				<p className="h5-18_1nd">Your popout:</p>
-				<UserPopout user={getCurrentUser()} />
 				<br />
 				<a
 					onClick={() => {
