@@ -1,6 +1,7 @@
-const { React, getModule, getModuleByDisplayName } = require('powercord/webpack');
+const { React, getModule } = require('powercord/webpack');
 const { TextInput, SwitchItem, Category, SelectInput } = require('powercord/components/settings');
 const path = require('path');
+const { getAssets } = getModule(['getAssets'], false);
 
 const configs = [
 	{
@@ -16,6 +17,7 @@ const configs = [
 		value: 'rpc3',
 	},
 ];
+
 module.exports = class RPCSettings extends React.PureComponent {
 	constructor(props) {
 		super(props);
@@ -26,6 +28,17 @@ module.exports = class RPCSettings extends React.PureComponent {
 			button2Def: { label: '', url: '' },
 			selectedRPC: this.props.getSetting('selected', 'rpc1'),
 		};
+	}
+
+	getImages() {
+		const rpc = this.props.getSetting(this.state.selectedRPC);
+		getAssets(rpc.client_id)
+			.then(assets => this.setState({ available_images: Object.values(assets).filter(asset => asset.type === 1) }))
+			.catch(() => this.setState({ available_images: null }));
+	}
+
+	componentDidMount() {
+		this.getImages();
 	}
 
 	render() {
@@ -77,6 +90,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 						rpc.client_id = val;
 						updateSetting(this.state.selectedRPC, rpc);
 						powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
+						this.getImages();
 					}}
 				>
 					Client ID
@@ -131,17 +145,20 @@ module.exports = class RPCSettings extends React.PureComponent {
 						this.setState({ category0Opened: !this.state.category0Opened });
 					}}
 				>
-					<TextInput
-						note='this will be the file name'
-						value={rpc.large_image}
-						onChange={val => {
-							rpc.large_image = val;
-							updateSetting(this.state.selectedRPC, rpc);
-							powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
-						}}
-					>
-						Large Image
-					</TextInput>
+					{this.state.available_images && (
+						<SelectInput
+							searchable={true}
+							value={rpc.large_image}
+							onChange={val => {
+								rpc.large_image = val.value;
+								updateSetting(this.state.selectedRPC, rpc);
+								powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
+							}}
+							options={this.state.available_images.map(asset => ({ label: asset.name, value: asset.name }))}
+						>
+							Large Image
+						</SelectInput>
+					)}
 					<TextInput
 						note='This will show text when large image is hovered'
 						value={rpc.large_text ?? ''}
@@ -153,17 +170,20 @@ module.exports = class RPCSettings extends React.PureComponent {
 					>
 						Large Text
 					</TextInput>
-					<TextInput
-						note='this will be the file name'
-						value={rpc.small_image}
-						onChange={val => {
-							rpc.small_image = val;
-							updateSetting(this.state.selectedRPC, rpc);
-							powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
-						}}
-					>
-						Small Image
-					</TextInput>
+					{this.state.available_images && (
+						<SelectInput
+							searchable={true}
+							value={rpc.small_image}
+							onChange={val => {
+								rpc.small_image = val.value;
+								updateSetting(this.state.selectedRPC, rpc);
+								powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
+							}}
+							options={this.state.available_images.map(asset => ({ label: asset.name, value: asset.name }))}
+						>
+							Small Image
+						</SelectInput>
+					)}
 					<TextInput
 						note='This will show text when small image is hovered'
 						value={rpc.small_text ?? ''}
@@ -236,7 +256,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 						Button 2 Url
 					</TextInput>
 				</Category>
-				<p className="h5-18_1nd">Your Activities:</p>
+				<p className='h5-18_1nd'>Your Activities:</p>
 				<div style={{ backgroundColor: 'var(--background-floating)' }}>
 					<UserPopout user={getCurrentUser()} />
 				</div>
