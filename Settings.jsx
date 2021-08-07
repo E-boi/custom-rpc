@@ -33,7 +33,11 @@ module.exports = class RPCSettings extends React.PureComponent {
 	getImages() {
 		const rpc = this.props.getSetting(this.state.selectedRPC);
 		getAssets(rpc.client_id)
-			.then(assets => this.setState({ available_images: Object.values(assets).filter(asset => asset.type === 1) }))
+			.then(assets => {
+				const array = Object.values(assets).filter(asset => asset.type === 1);
+				array.unshift({ name: 'None' });
+				this.setState({ available_images: array });
+			})
 			.catch(() => this.setState({ available_images: null }));
 	}
 
