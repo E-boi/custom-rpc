@@ -20,8 +20,9 @@ const defaults = {
 module.exports = class customRPC extends Plugin {
 	reloadRPC() {
 		const selectedRPC = this.settings.get('selected', 'rpc1');
-		const { SET_ACTIVITY } = getModule(['INVITE_BROWSER'], false);
+		const { SET_ACTIVITY } = getModule(['SET_ACTIVITY'], false);
 		SET_ACTIVITY.handler({
+			isSocketConnected: () => true,
 			socket: {
 				id: 100,
 				application: {
