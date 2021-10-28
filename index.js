@@ -3,24 +3,42 @@ const { getModule, React } = require('powercord/webpack');
 const Settings = require('./Settings');
 const path = require('path');
 
+const { SET_ACTIVITY } = getModule(['SET_ACTIVITY'], false);
 const defaults = {
-	show_time: true,
-	client_id: '711416957718757418',
-	name: 'Custom RPC',
-	state: 'Powercord client',
-	details: 'Browsing Discord',
-	large_image: 'powercord',
-	small_image: 'powercord',
-	button1: {
-		label: 'powercord.dev',
-		url: 'https://powercord.dev/',
+	rpc1: {
+		show_time: true,
+		client_id: '892203377503658064',
+		name: 'Custom RPC',
+		state: 'Powercord client',
+		details: 'Browsing Discord',
+		large_image: 'powercord',
+		small_image: 'powercord',
 	},
+	rpc2: {
+		show_time: true,
+		client_id: '892203377503658064',
+		name: 'Custom RPC',
+		state: 'Powercord client',
+		details: 'Browsing Discord',
+		large_image: 'powercord',
+		small_image: 'powercord',
+	},
+	rpc3: {
+		show_time: true,
+		client_id: '892203377503658064',
+		name: 'Custom RPC',
+		state: 'Powercord client',
+		details: 'Browsing Discord',
+		large_image: 'powercord',
+		small_image: 'powercord',
+	},
+
+	selected: 'rpc1',
 };
 
 module.exports = class customRPC extends Plugin {
 	reloadRPC() {
 		const selectedRPC = this.settings.get('selected', 'rpc1');
-		const { SET_ACTIVITY } = getModule(['SET_ACTIVITY'], false);
 		SET_ACTIVITY.handler({
 			isSocketConnected: () => true,
 			socket: {
@@ -138,8 +156,8 @@ module.exports = class customRPC extends Plugin {
 	}
 
 	pluginWillUnload() {
-		const { SET_ACTIVITY } = getModule(['INVITE_BROWSER'], false);
 		SET_ACTIVITY.handler({
+			isSocketConnected: () => true,
 			socket: {
 				id: 100,
 				application: {
