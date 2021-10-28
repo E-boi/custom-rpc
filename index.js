@@ -63,47 +63,6 @@ module.exports = class customRPC extends Plugin {
 		});
 	}
 
-	convertSettingsForConfigs() {
-		if (this.settings.get('rpc1', undefined)) return;
-		const settings = powercord.api.settings._fluxProps(__dirname.split(path.sep).pop()).settings;
-		if (Object.entries(settings).length === 0) {
-			this.log('setting defaults...');
-			this.settings.set('rpc1', defaults);
-			this.settings.set('rpc2', defaults);
-			this.settings.set('rpc3', defaults);
-			powercord.api.notices.sendToast('custom-rpc-1', {
-				header: 'Settings conversion done!',
-				content: `Please reload so you can start using saved configs for custom-rpc!`,
-			});
-			return;
-		}
-		const rpc1 = {
-			show_time: settings.show_time || defaults.show_time,
-			client_id: settings.client_id || defaults.client_id,
-			name: settings.name || defaults.name,
-			state: settings.state || defaults.state,
-			details: settings.details || defaults.details,
-			large_image: settings.large_image || defaults.large_image,
-			small_image: settings.small_image || defaults.small_image,
-			button1: {
-				label: settings.button1?.label ?? defaults.button1.label,
-				url: settings.button1?.url ?? defaults.button1.url,
-			},
-		};
-		if (settings.button2) rpc1.button2 = settings.button2;
-		if (settings.start_time) rpc1.start_time = settings.start_time;
-		if (settings.large_text) rpc1.large_text = settings.large_text;
-		if (settings.small_text) rpc1.small_text = settings.small_text;
-		for (const setting of Object.entries(settings)) this.settings.delete(setting[0]);
-		this.settings.set('rpc1', rpc1);
-		this.settings.set('rpc2', defaults);
-		this.settings.set('rpc3', defaults);
-		powercord.api.notices.sendToast('custom-rpc-2', {
-			header: 'Settings conversion done!',
-			content: `Please reload so you can start using saved configs for custom-rpc!`,
-		});
-	}
-
 	game() {
 		const selectedRPC = this.settings.get('selected', 'rpc1');
 		let rp = {
@@ -140,7 +99,6 @@ module.exports = class customRPC extends Plugin {
 	}
 
 	startPlugin() {
-		this.convertSettingsForConfigs();
 		this.reloadRPC = this.reloadRPC; // this will be used in settings to reload
 		powercord.api.settings.registerSettings(this.entityID, {
 			category: this.entityID,
