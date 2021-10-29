@@ -210,8 +210,9 @@ module.exports = class RPCSettings extends React.PureComponent {
 					}}
 				>
 					<TextInput
-						value={rpc.button1.label}
+						value={rpc.button1?.label}
 						onChange={val => {
+							if (!rpc.button1) rpc.button1 = {};
 							rpc.button1.label = val;
 							updateSetting(this.state.selectedRPC, rpc);
 							if (rpc.button1.url != '') {
