@@ -99,6 +99,12 @@ module.exports = class customRPC extends Plugin {
 	}
 
 	startPlugin() {
+		if (!this.settings.get('rpc1')) {
+			this.settings.set('rpc1', defaults.rpc1);
+			this.settings.set('rpc2', defaults.rpc2);
+			this.settings.set('rpc3', defaults.rpc3);
+			this.settings.set('selected', defaults.selected);
+		}
 		this.reloadRPC = this.reloadRPC; // this will be used in settings to reload
 		powercord.api.settings.registerSettings(this.entityID, {
 			category: this.entityID,
