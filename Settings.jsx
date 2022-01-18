@@ -48,7 +48,7 @@ module.exports = class RPCSettings extends React.PureComponent {
 	render() {
 		const { getSetting, updateSetting, toggleSetting } = this.props;
 		const { getCurrentUser } = getModule(['getCurrentUser'], false);
-		const UserPopout = getModule(m => m.default?.displayName === 'UserProfileActivity', false).default;
+		// const UserPopout = getModule(m => m.default?.displayName === 'UserProfileActivity', false).default;
 		const rpc = getSetting(this.state.selectedRPC);
 		return (
 			<div>
@@ -262,16 +262,14 @@ module.exports = class RPCSettings extends React.PureComponent {
 						Button 2 Url
 					</TextInput>
 				</Category>
-				<p className='h5-18_1nd'>Your Activities:</p>
+				{/* <p className='h5-18_1nd'>Your Activities:</p>
 				<div style={{ backgroundColor: 'var(--background-floating)' }}>
 					<UserPopout user={getCurrentUser()} />
-				</div>
+				</div> */}
 				<br />
 				<a
 					onClick={() => {
-						require('electron').shell.openExternal(
-							'https://www.reddit.com/r/discordapp/comments/a2c2un/how_to_setup_a_custom_discord_rich_presence_for/'
-						);
+						require('electron').shell.openExternal('https://www.reddit.com/r/discordapp/comments/a2c2un/how_to_setup_a_custom_discord_rich_presence_for/');
 					}}
 				>
 					Help for custom RPC but do step 3 with this plugin
