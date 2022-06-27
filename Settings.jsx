@@ -149,20 +149,16 @@ module.exports = class RPCSettings extends React.PureComponent {
 						this.setState({ category0Opened: !this.state.category0Opened });
 					}}
 				>
-					{this.state.available_images && (
-						<SelectInput
-							searchable={true}
-							value={rpc.large_image}
-							onChange={val => {
-								rpc.large_image = val.value;
-								updateSetting(this.state.selectedRPC, rpc);
-								powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
-							}}
-							options={this.state.available_images.map(asset => ({ label: asset.name, value: asset.name }))}
-						>
-							Large Image
-						</SelectInput>
-					)}
+					<TextInput
+						value={rpc.large_image}
+						onChange={val => {
+							rpc.large_image = val;
+							updateSetting(this.state.selectedRPC, rpc);
+							powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
+						}}
+					>
+						Large Image
+					</TextInput>
 					<TextInput
 						note='This will show text when large image is hovered'
 						value={rpc.large_text ?? ''}
@@ -174,20 +170,16 @@ module.exports = class RPCSettings extends React.PureComponent {
 					>
 						Large Text
 					</TextInput>
-					{this.state.available_images && (
-						<SelectInput
-							searchable={true}
-							value={rpc.small_image}
-							onChange={val => {
-								rpc.small_image = val.value;
-								updateSetting(this.state.selectedRPC, rpc);
-								powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
-							}}
-							options={this.state.available_images.map(asset => ({ label: asset.name, value: asset.name }))}
-						>
-							Small Image
-						</SelectInput>
-					)}
+					<TextInput
+						value={rpc.small_image}
+						onChange={val => {
+							rpc.small_image = val;
+							updateSetting(this.state.selectedRPC, rpc);
+							powercord.pluginManager.get(__dirname.split(path.sep).pop()).reloadRPC();
+						}}
+					>
+						Small Image
+					</TextInput>
 					<TextInput
 						note='This will show text when small image is hovered'
 						value={rpc.small_text ?? ''}
